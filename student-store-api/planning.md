@@ -341,3 +341,10 @@ All errors should return:
 ### Cascade delete verification
 - Deleting a Product removes associated OrderItems: ✅ tested
 - Deleting an Order removes associated OrderItems: ✅ tested
+
+## Decisions Log -- Order Creation Transaction
+
+- **What my Transactional Flow spec got right**: The operation order was correct: validate input, load products, create order, create order items, compute/update total, and return order with nested items.
+- **What the spec missed that I discovered during implementation**: I needed an explicit response-mapping step so the API returns `items` in responses while Prisma stores the relation as `orderItems`.
+- **How the transaction error handling works**: `prisma.$transaction` runs all writes as one unit; if any step throws (like missing product IDs), Prisma rolls back all writes so no partial order or order items are saved.
+- **One thing I'd design differently if starting over**: I would move order creation logic into a dedicated service layer early, so route handlers stay thin as transaction complexity grows.

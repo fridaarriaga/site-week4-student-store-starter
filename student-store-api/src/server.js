@@ -13,6 +13,13 @@ const VALID_PRODUCT_CATEGORIES = new Set([
   "other"
 ])
 const VALID_PRODUCT_SORT_FIELDS = new Set(["price", "name"])
+const formatOrderWithItems = (order) => {
+  const { orderItems, ...orderFields } = order
+  return {
+    ...orderFields,
+    items: orderItems
+  }
+}
 
 app.use(express.json())
 
@@ -197,7 +204,7 @@ app.get("/orders/:id", async (req, res) => {
       return res.status(404).json({ error: "Order not found" })
     }
 
-    return res.status(200).json(order)
+    return res.status(200).json(formatOrderWithItems(order))
   } catch (err) {
     return res.status(500).json({ error: "Unable to fetch order" })
   }
@@ -231,28 +238,27 @@ app.post("/orders", async (req, res) => {
       normalizedItems.push({ productId, quantity })
     }
 
-    const uniqueProductIds = [...new Set(normalizedItems.map((item) => item.productId))]
-    const products = await prisma.product.findMany({
-      where: {
-        id: {
-          in: uniqueProductIds
-        }
-      }
-    })
-
-    if (products.length !== uniqueProductIds.length) {
-      return res.status(404).json({ error: "One or more products do not exist" })
-    }
-
-    const productMap = new Map(products.map((product) => [product.id, product]))
-
     const order = await prisma.$transaction(async (tx) => {
-      let total = 0
+      const uniqueProductIds = [...new Set(normalizedItems.map((item) => item.productId))]
+      const products = await tx.product.findMany({
+        where: {
+          id: {
+            in: uniqueProductIds
+          }
+        }
+      })
+
+      if (products.length !== uniqueProductIds.length) {
+        const missingProductError = new Error("One or more products do not exist")
+        missingProductError.code = "PRODUCT_NOT_FOUND"
+        throw missingProductError
+      }
+
+      const productMap = new Map(products.map((product) => [product.id, product]))
       const itemRows = normalizedItems.map((item) => {
         const product = productMap.get(item.productId)
         const unitPrice = product.price
         const lineTotal = unitPrice * item.quantity
-        total += lineTotal
         return {
           productId: item.productId,
           quantity: item.quantity,
@@ -267,7 +273,7 @@ app.post("/orders", async (req, res) => {
           customerEmail,
           customerAddress,
           status: status ? String(status).trim().toLowerCase() : undefined,
-          total
+          total: 0
         }
       })
 
@@ -278,14 +284,23 @@ app.post("/orders", async (req, res) => {
         }))
       })
 
+      const total = itemRows.reduce((sum, row) => sum + row.lineTotal, 0)
+      await tx.order.update({
+        where: { id: createdOrder.id },
+        data: { total }
+      })
+
       return tx.order.findUnique({
         where: { id: createdOrder.id },
         include: { orderItems: true }
       })
     })
 
-    return res.status(201).json(order)
+    return res.status(201).json(formatOrderWithItems(order))
   } catch (err) {
+    if (err.code === "PRODUCT_NOT_FOUND") {
+      return res.status(404).json({ error: "One or more products do not exist" })
+    }
     return res.status(500).json({ error: "Unable to create order" })
   }
 })
