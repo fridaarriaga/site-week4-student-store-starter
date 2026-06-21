@@ -1,4 +1,5 @@
 const express = require("express")
+const prisma = require("./db/db")
 const Product = require("../models/product")
 const Order = require("../models/order")
 
@@ -191,7 +192,7 @@ app.get("/orders/:id", async (req, res) => {
       return res.status(400).json({ error: "Invalid order id" })
     }
 
-    const order = await Order.fetchById(id)
+    const order = await Order.fetchByIdWithItems(id)
     if (!order) {
       return res.status(404).json({ error: "Order not found" })
     }
@@ -209,27 +210,78 @@ app.post("/orders", async (req, res) => {
       customerEmail,
       customerAddress,
       status,
-      total
+      items
     } = req.body
 
     if (!customerName || !customerEmail || !customerAddress) {
       return res.status(400).json({ error: "customerName, customerEmail, and customerAddress are required" })
     }
 
-    let parsedTotal = 0
-    if (total !== undefined) {
-      parsedTotal = Number(total)
-      if (!Number.isFinite(parsedTotal) || parsedTotal < 0) {
-        return res.status(400).json({ error: "total must be a non-negative number" })
-      }
+    if (!Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ error: "items must be a non-empty array" })
     }
 
-    const order = await Order.create({
-      customerName,
-      customerEmail,
-      customerAddress,
-      status: status ? String(status).trim().toLowerCase() : undefined,
-      total: parsedTotal
+    const normalizedItems = []
+    for (const item of items) {
+      const productId = Number(item.productId)
+      const quantity = Number(item.quantity)
+      if (!Number.isInteger(productId) || productId <= 0 || !Number.isInteger(quantity) || quantity <= 0) {
+        return res.status(400).json({ error: "Each item must include valid productId and quantity" })
+      }
+      normalizedItems.push({ productId, quantity })
+    }
+
+    const uniqueProductIds = [...new Set(normalizedItems.map((item) => item.productId))]
+    const products = await prisma.product.findMany({
+      where: {
+        id: {
+          in: uniqueProductIds
+        }
+      }
+    })
+
+    if (products.length !== uniqueProductIds.length) {
+      return res.status(404).json({ error: "One or more products do not exist" })
+    }
+
+    const productMap = new Map(products.map((product) => [product.id, product]))
+
+    const order = await prisma.$transaction(async (tx) => {
+      let total = 0
+      const itemRows = normalizedItems.map((item) => {
+        const product = productMap.get(item.productId)
+        const unitPrice = product.price
+        const lineTotal = unitPrice * item.quantity
+        total += lineTotal
+        return {
+          productId: item.productId,
+          quantity: item.quantity,
+          unitPrice,
+          lineTotal
+        }
+      })
+
+      const createdOrder = await tx.order.create({
+        data: {
+          customerName,
+          customerEmail,
+          customerAddress,
+          status: status ? String(status).trim().toLowerCase() : undefined,
+          total
+        }
+      })
+
+      await tx.orderItem.createMany({
+        data: itemRows.map((row) => ({
+          ...row,
+          orderId: createdOrder.id
+        }))
+      })
+
+      return tx.order.findUnique({
+        where: { id: createdOrder.id },
+        include: { orderItems: true }
+      })
     })
 
     return res.status(201).json(order)

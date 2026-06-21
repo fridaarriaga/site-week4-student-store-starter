@@ -15,6 +15,15 @@ class Order {
     })
   }
 
+  static async fetchByIdWithItems(id) {
+    return prisma.order.findUnique({
+      where: { id },
+      include: {
+        orderItems: true
+      }
+    })
+  }
+
   static async create(data) {
     return prisma.order.create({
       data

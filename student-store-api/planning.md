@@ -330,3 +330,14 @@ All errors should return:
 - **Schema translation that went smoothly**: `id`, `createdAt`, and `updatedAt` mapped directly to Prisma decorators (`@id`, `@default(now())`, `@updatedAt`) without needing spec changes.
 - **Field decision I made during implementation that wasn't in the original spec**: Route handlers validate `price` as a non-negative number before writing to the database to avoid invalid numeric input.
 - **Route behavior that needed a spec update**: Added explicit `400` invalid-id handling (`/products/:id`) and empty-update-body handling for `PUT /products/:id`; success-path response shapes stayed aligned with the contract.
+
+## Spec Reconciliation -- Milestone 4 (Schema Audit)
+
+### Schema vs. spec gaps found
+- `OrderItem` model and relation fields were missing from `schema.prisma`; added `OrderItem` with `orderId`, `productId`, `quantity`, `unitPrice`, `lineTotal`, `createdAt`, and `updatedAt` to match the spec.
+- `Product` and `Order` relation arrays were missing; added `orderItems` relation fields on both models so schema relationships match planning.
+- `GET /orders/:id` previously returned only the order row; updated data access to include associated `orderItems` per API contract.
+
+### Cascade delete verification
+- Deleting a Product removes associated OrderItems: ✅ tested
+- Deleting an Order removes associated OrderItems: ✅ tested
