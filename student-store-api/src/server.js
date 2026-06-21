@@ -1,4 +1,5 @@
 const express = require("express")
+const cors = require("cors")
 const prisma = require("./db/db")
 const Product = require("../models/product")
 const Order = require("../models/order")
@@ -22,6 +23,7 @@ const formatOrderWithItems = (order) => {
 }
 
 app.use(express.json())
+app.use(cors())
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Server is running" })
