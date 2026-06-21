@@ -11,6 +11,7 @@ This document defines the source of truth for model design, API behavior, and tr
 | `id` | `Int` | Required | `autoincrement()` | Primary key |
 | `name` | `String` | Required | none | Product display name |
 | `description` | `String` | Optional | none | Optional product details |
+| `category` | `String` | Optional | none | Lowercase category label (e.g., `clothing`, `school`, `electronics`) |
 | `price` | `Float` | Required | none | Unit price |
 | `imageUrl` | `String` | Optional | none | Optional image URL |
 | `createdAt` | `DateTime` | Required | `now()` | Record creation timestamp |
@@ -100,11 +101,25 @@ All errors should return:
 #### `GET /products`
 - **Request**
   - No body.
-  - Optional query params (future-safe): `minPrice`, `maxPrice`, `name`.
+  - Optional query params:
+    - `category` (string): filter products by category (example: `?category=clothing`).
+    - `sort` (string): sort ascending by supported fields:
+      - `price` (example: `?sort=price`)
+      - `name` (example: `?sort=name`)
+  - Default behavior when no query parameters are provided:
+    - Returns all products.
+    - No explicit ordering is applied.
+- **Query Parameters**
+  - `category`: must be one of `clothing`, `school`, `electronics`, `accessories`, `other`.
+  - `sort`: must be one of `price` or `name`.
 - **Success**
   - `200 OK`
   - Body: array of products.
 - **Error example**
+  - `400 Bad Request`
+  - `{ "error": "Invalid category value" }`
+  - `400 Bad Request`
+  - `{ "error": "sort must be one of: price, name" }`
   - `500 Internal Server Error`
   - `{ "error": "Unable to fetch products" }`
 
@@ -124,6 +139,7 @@ All errors should return:
 {
   "name": "Notebook",
   "description": "College ruled notebook",
+  "category": "school",
   "price": 4.99,
   "imageUrl": "https://example.com/notebook.png"
 }
@@ -138,7 +154,7 @@ All errors should return:
 #### `PUT /products/:id`
 - **Request**
   - Route param: `id` (integer).
-  - Body: any updatable product fields (`name`, `description`, `price`, `imageUrl`).
+  - Body: any updatable product fields (`name`, `description`, `category`, `price`, `imageUrl`).
 - **Success**
   - `200 OK`
   - Body: updated product object.
@@ -308,3 +324,9 @@ All errors should return:
   - `404 Not Found` with `{ "error": "One or more products do not exist" }` for missing product IDs.
   - `400 Bad Request` for validation issues.
   - `500 Internal Server Error` for unexpected failures.
+
+## Decisions Log -- Product Model
+
+- **Schema translation that went smoothly**: `id`, `createdAt`, and `updatedAt` mapped directly to Prisma decorators (`@id`, `@default(now())`, `@updatedAt`) without needing spec changes.
+- **Field decision I made during implementation that wasn't in the original spec**: Route handlers validate `price` as a non-negative number before writing to the database to avoid invalid numeric input.
+- **Route behavior that needed a spec update**: Added explicit `400` invalid-id handling (`/products/:id`) and empty-update-body handling for `PUT /products/:id`; success-path response shapes stayed aligned with the contract.
