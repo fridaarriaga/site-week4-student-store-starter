@@ -5,6 +5,8 @@ import NotFound from "../NotFound/NotFound";
 import { formatPrice } from "../../utils/format";
 import "./ProductDetail.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001"
+
 function ProductDetail({ addToCart, removeFromCart, getQuantityOfItemInCart }) {
   
   const { productId } = useParams();
@@ -12,6 +14,21 @@ function ProductDetail({ addToCart, removeFromCart, getQuantityOfItemInCart }) {
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setIsFetching(true)
+        setError(null)
+        const response = await axios.get(`${API_BASE_URL}/products/${productId}`)
+        setProduct(response.data)
+      } catch (err) {
+        setError(err)
+      } finally {
+        setIsFetching(false)
+      }
+    }
+    fetchProduct()
+  }, [productId])
 
   if (error) {
     return <NotFound />;
@@ -39,7 +56,7 @@ function ProductDetail({ addToCart, removeFromCart, getQuantityOfItemInCart }) {
     <div className="ProductDetail">
       <div className="product-card">
         <div className="media">
-          <img src={product.image_url || "/placeholder.png"} alt={product.name} />
+          <img src={product.imageUrl || "/placeholder.png"} alt={product.name} />
         </div>
         <div className="product-info">
           <p className="product-name">{product.name}</p>

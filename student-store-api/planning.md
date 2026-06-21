@@ -348,3 +348,20 @@ All errors should return:
 - **What the spec missed that I discovered during implementation**: I needed an explicit response-mapping step so the API returns `items` in responses while Prisma stores the relation as `orderItems`.
 - **How the transaction error handling works**: `prisma.$transaction` runs all writes as one unit; if any step throws (like missing product IDs), Prisma rolls back all writes so no partial order or order items are saved.
 - **One thing I'd design differently if starting over**: I would move order creation logic into a dedicated service layer early, so route handlers stay thin as transaction complexity grows.
+
+## Final Spec Reconciliation: Project Complete
+
+### Full-system audit result
+- Frontend API usage now aligns with backend contract: product listing, product detail, and order creation all target the documented endpoints.
+- `POST /orders` request and response shape match the spec, including nested `items` and computed `total`.
+- Added CORS middleware in backend implementation so the browser frontend can call the API during development.
+
+### Gaps resolved during frontend integration
+- Frontend initially had no active API request flow; added axios requests for `GET /products`, `GET /products/:id`, and `POST /orders`.
+- Frontend expected `image_url`; backend/spec uses `imageUrl`. Updated frontend to use `imageUrl`.
+- Checkout UI originally used fields not present in the API contract (`name`/`dorm_number` state); updated to collect and send `customerName`, `customerEmail`, and `customerAddress`.
+- Checkout success component expected legacy `purchase.receipt` response shape; updated it to render from the spec-compliant order response (`id`, `items`, `total`).
+
+### What the spec enabled during this project
+- The API contract and transaction spec made it straightforward to identify integration mismatches quickly, because every endpoint already had expected request/response shapes and error behavior documented.
+- During debugging, the written spec reduced guesswork: once frontend fields were mapped to contract fields, the end-to-end flow worked without adding extra endpoints or undocumented payload formats.

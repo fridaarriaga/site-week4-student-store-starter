@@ -6,7 +6,7 @@ function Home({isFetching, products, addToCart, removeFromCart, searchInputValue
   // Filters products by the active category if it is not 'All Categories'.
   const productsByCategory =
     Boolean(activeCategory) && activeCategory !== "All Categories"
-      ? products.filter((p) => p.category === activeCategory)
+      ? products.filter((p) => p.category === String(activeCategory).toLowerCase())
       : products
 
   // Filters products by the active category if it is not 'All Categories',
