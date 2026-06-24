@@ -6,6 +6,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Home from "../Home/Home";
 import ProductDetail from "../ProductDetail/ProductDetail";
 import NotFound from "../NotFound/NotFound";
+import KawaiiBanner from "../KawaiiBanner/KawaiiBanner";
 import { removeFromCart, addToCart, getQuantityOfItemInCart, getTotalItemsInCart } from "../../utils/cart";
 import "./App.css";
 
@@ -17,7 +18,8 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All Categories");
   const [searchInputValue, setSearchInputValue] = useState("");
-  const [userInfo, setUserInfo] = useState({ customerName: "", customerEmail: "", customerAddress: "" });
+  const [searchDraftValue, setSearchDraftValue] = useState("");
+  const [userInfo, setUserInfo] = useState({ customer_id: "" });
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
   const [isFetching, setIsFetching] = useState(false);
@@ -35,8 +37,14 @@ function App() {
   const handleGetTotalCartItems = () => getTotalItemsInCart(cart);
 
   const handleOnSearchInputChange = (event) => {
-    setSearchInputValue(event.target.value);
+    const nextValue = event.target.value
+    setSearchDraftValue(nextValue)
+    setSearchInputValue(nextValue)
   };
+
+  const handleOnSearchSubmit = () => {
+    setSearchInputValue(searchDraftValue)
+  }
 
   const handleOnCheckout = async () => {
     const cartEntries = Object.entries(cart)
@@ -45,13 +53,13 @@ function App() {
       return
     }
 
-    if (!userInfo.customerName || !userInfo.customerEmail || !userInfo.customerAddress) {
-      setError("Please complete name, email, and address before checkout.")
+    if (!userInfo.customer_id) {
+      setError("Please enter customer ID before checkout.")
       return
     }
 
     const items = cartEntries.map(([productId, quantity]) => ({
-      productId: Number(productId),
+      product_id: Number(productId),
       quantity
     }))
 
@@ -59,9 +67,7 @@ function App() {
       setIsCheckingOut(true)
       setError(null)
       const response = await axios.post(`${API_BASE_URL}/orders`, {
-        customerName: userInfo.customerName,
-        customerEmail: userInfo.customerEmail,
-        customerAddress: userInfo.customerAddress,
+        customer_id: String(userInfo.customer_id),
         status: "pending",
         items
       })
@@ -112,11 +118,13 @@ function App() {
           setOrder={setOrder}
         />
         <main>
+          <KawaiiBanner />
           <SubNavbar
             activeCategory={activeCategory}
             setActiveCategory={setActiveCategory}
-            searchInputValue={searchInputValue}
+            searchDraftValue={searchDraftValue}
             handleOnSearchInputChange={handleOnSearchInputChange}
+            handleOnSearchSubmit={handleOnSearchSubmit}
           />
           <Routes>
             <Route

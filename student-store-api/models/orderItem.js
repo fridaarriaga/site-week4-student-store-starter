@@ -9,8 +9,8 @@ class OrderItem {
 
   static async fetchByOrderId(orderId) {
     return prisma.orderItem.findMany({
-      where: { orderId },
-      orderBy: { id: "asc" }
+      where: { order_id: orderId },
+      orderBy: { order_item_id: "asc" }
     })
   }
 }

@@ -3,8 +3,8 @@
       {
         "id": 1,
         "name": "College Hoodie",
-        "category": "Apparel",
-        "image_url": "https://tinyurl.com/college-hoodie",
+        "category": "Clothing",
+        "image_url": "https://fls-9ffea097-c795-4661-a76d-6c87d25da661.laravel.cloud/shopkins/full/873:Greta-Sweater-Rarity:Exclusive.png",
         "description": "Comfortable and stylish hoodie with the college logo.",
         "price": 29.99
       },
@@ -12,7 +12,7 @@
         "id": 2,
         "name": "Algebra Textbook",
         "category": "Books",
-        "image_url": "https://tinyurl.com/algebra-book",
+        "image_url": "https://m.media-amazon.com/images/I/914PMhAzGuL._UF1000,1000_QL80_.jpg",
         "description": "Comprehensive textbook covering all aspects of algebra.",
         "price": 59.99
       },
@@ -20,7 +20,7 @@
         "id": 3,
         "name": "College Notebook",
         "category": "Supplies",
-        "image_url": "https://tinyurl.com/college-notebook",
+        "image_url": "https://fls-9ffea097-c795-4661-a76d-6c87d25da661.laravel.cloud/shopkins/full/418:Noni-Notebook-Rarity:Special-Edition.png",
         "description": "Durable notebook with college branding, perfect for note-taking.",
         "price": 6.99
       },
@@ -28,7 +28,7 @@
         "id": 4,
         "name": "College Pen",
         "category": "Supplies",
-        "image_url": "https://tinyurl.com/college-pen",
+        "image_url": "https://fls-9ffea097-c795-4661-a76d-6c87d25da661.laravel.cloud/shopkins/full/770:Penny-Pencil-Rarity:Exclusive.png",
         "description": "Smooth-writing pen with college logo, ideal for writing and exams.",
         "price": 1.99
       },
@@ -36,7 +36,7 @@
         "id": 5,
         "name": "College Mug",
         "category": "Accessories",
-        "image_url": "https://tinyurl.com/college-mug",
+        "image_url": "https://fls-9ffea097-c795-4661-a76d-6c87d25da661.laravel.cloud/shopkins/full/1726:Marcia-Heart-Mug-Rarity:Common.png",
         "description": "Ceramic mug with college emblem, perfect for coffee or tea.",
         "price": 9.99
       },
@@ -44,7 +44,7 @@
         "id": 6,
         "name": "College Beanie",
         "category": "Apparel",
-        "image_url": "https://tinyurl.com/college-beanie",
+        "image_url": "https://fls-9ffea097-c795-4661-a76d-6c87d25da661.laravel.cloud/shopkins/full/1664:Milly-Moose-Beanie-Rarity:Common.png",
         "description": "Warm and cozy beanie with the college logo, perfect for cold weather.",
         "price": 14.99
       },
@@ -52,7 +52,7 @@
         "id": 7,
         "name": "Energy Drink",
         "category": "Snacks",
-        "image_url": "https://tinyurl.com/cp-energy-drink",
+        "image_url": "https://fls-9ffea097-c795-4661-a76d-6c87d25da661.laravel.cloud/shopkins/full/1364:Fizzy-Soda-Rarity:Common.png",
         "description": "Refreshing energy drink to keep you focused during long study sessions.",
         "price": 2.99
       },
@@ -60,7 +60,7 @@
         "id": 8,
         "name": "Chocolate Bar",
         "category": "Snacks",
-        "image_url": "https://tinyurl.com/cp-chocolate-bar",
+        "image_url": "https://fls-9ffea097-c795-4661-a76d-6c87d25da661.laravel.cloud/shopkins/full/693:Cheeky-Chocolate-Rarity:Ultra-Rare.png",
         "description": "Delicious chocolate bar for a quick snack between classes.",
         "price": 1.49
       },
@@ -68,7 +68,7 @@
         "id": 9,
         "name": "Granola Bar",
         "category": "Snacks",
-        "image_url": "https://tinyurl.com/cp-granola-bar",
+        "image_url": "https://i.pinimg.com/736x/81/5b/bc/815bbc02fbff1ecb3be63e1167ee9e30.jpg",
         "description": "Healthy granola bar, perfect for a quick energy boost.",
         "price": 1.29
       }

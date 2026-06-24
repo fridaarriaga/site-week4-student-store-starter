@@ -8,14 +8,14 @@ const CheckoutSuccess = ({ order, setOrder }) => {
 
   const renderReceipt = () => (
     <>
-      <p className="header">Order #{order.id}</p>
+      <p className="header">Order #{order.order_id}</p>
       <ul className="purchase">
-        {order.items.map((item) => (
-          <li key={item.id}>
-            Product #{item.productId} x {item.quantity} - {formatPrice(item.lineTotal)}
+        {order.order_items.map((item) => (
+          <li key={item.order_item_id}>
+            Product #{item.product_id} x {item.quantity} - {formatPrice(item.price * item.quantity)}
           </li>
         ))}
-        <li>Total: {formatPrice(order.total)}</li>
+        <li>Total: {formatPrice(order.total_price)}</li>
       </ul>
     </>
   )

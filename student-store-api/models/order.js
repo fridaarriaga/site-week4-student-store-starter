@@ -11,15 +11,15 @@ class Order {
 
   static async fetchById(id) {
     return prisma.order.findUnique({
-      where: { id }
+      where: { order_id: id }
     })
   }
 
   static async fetchByIdWithItems(id) {
     return prisma.order.findUnique({
-      where: { id },
+      where: { order_id: id },
       include: {
-        orderItems: true
+        order_items: true
       }
     })
   }
@@ -32,14 +32,14 @@ class Order {
 
   static async updateById(id, data) {
     return prisma.order.update({
-      where: { id },
+      where: { order_id: id },
       data
     })
   }
 
   static async deleteById(id) {
     return prisma.order.delete({
-      where: { id }
+      where: { order_id: id }
     })
   }
 }
