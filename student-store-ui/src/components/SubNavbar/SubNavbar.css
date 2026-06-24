@@ -146,3 +146,83 @@
 .SubNavbar .category-menu li button:active {
   transform: translateY(1px);
 }
+
+@media screen and (max-width: 1024px) {
+  .SubNavbar .content {
+    padding-top: 14px;
+  }
+
+  .SubNavbar .content .row {
+    margin: 12px 0;
+  }
+
+  .SubNavbar .content .search-bar {
+    margin-right: 0;
+  }
+
+  .SubNavbar .category-menu {
+    justify-content: flex-start;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+  }
+
+  .SubNavbar .category-menu li {
+    flex: 0 0 auto;
+  }
+
+  .SubNavbar .category-menu li button {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .SubNavbar .content .search-bar input {
+    height: 42px;
+    font-size: 15px;
+  }
+
+  .SubNavbar .content .search-bar i {
+    width: 42px;
+    height: 42px;
+  }
+
+  .SubNavbar .category-menu {
+    gap: 12px;
+    height: auto;
+  }
+
+  .SubNavbar .category-menu li button {
+    font-size: 15px;
+    padding-bottom: 6px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .SubNavbar .content .row {
+    margin: 8px 0;
+  }
+
+  .SubNavbar .content .search-bar input {
+    height: 40px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .SubNavbar .content .search-bar i {
+    width: 40px;
+    height: 40px;
+  }
+
+  .SubNavbar .category-menu {
+    gap: 10px;
+    padding-bottom: 6px;
+  }
+
+  .SubNavbar .category-menu li button {
+    font-size: 14px;
+  }
+}

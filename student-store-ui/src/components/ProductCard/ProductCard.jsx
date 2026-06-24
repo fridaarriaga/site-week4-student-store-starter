@@ -3,9 +3,12 @@ import codepath from "../../assets/codepath.svg"
 import { formatPrice } from "../../utils/format"
 import "./ProductCard.css"
 
-function ProductCard({ product, quantity, addToCart, removeFromCart }) {
+function ProductCard({ product, quantity, addToCart, removeFromCart, index = 0 }) {
   return (
-    <div className="ProductCard">
+    <div
+      className="ProductCard"
+      style={{ animationDelay: `${Math.min(index * 80, 800)}ms` }}
+    >
       <div className="media">
         <Link to={`/${product.id}`}>
           {product.image_url ? <img src={product.image_url} alt="product cover" /> : <img src={codepath} alt="product cover" />}

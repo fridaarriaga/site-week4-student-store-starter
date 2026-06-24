@@ -17,3 +17,15 @@
   overflow-x: hidden;
   padding-left: 60px;
 }
+
+@media screen and (max-width: 768px) {
+  .App main {
+    padding-left: 48px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .App main {
+    padding-left: 40px;
+  }
+}

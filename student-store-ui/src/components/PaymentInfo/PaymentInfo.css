@@ -45,3 +45,28 @@
   border: solid 1px white;
   color: white;
 }
+
+@media screen and (max-width: 480px) {
+  .PaymentInfo {
+    padding: 12px 10px;
+  }
+
+  .PaymentInfo > h3,
+  .PaymentInfo .label,
+  .PaymentInfo .input-field .label {
+    color: #4b2a48;
+  }
+
+  .PaymentInfo .input-field .control input {
+    height: 42px;
+    font-size: 15px;
+  }
+
+  .PaymentInfo button {
+    padding: 10px 14px;
+    font-size: 16px;
+    border-color: #b06c99;
+    color: #4b2a48;
+    background: rgba(255, 255, 255, 0.55);
+  }
+}

@@ -44,3 +44,31 @@
   cursor: pointer;
   color: white;
 }
+
+@media screen and (max-width: 768px) {
+  .Sidebar.closed {
+    width: 48px;
+  }
+
+  .Sidebar.open {
+    width: min(92vw, 440px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .Sidebar.closed {
+    width: 40px;
+  }
+
+  .Sidebar.open {
+    width: 94vw;
+  }
+
+  .Sidebar .toggle-button {
+    margin-top: 14px;
+  }
+
+  .Sidebar i {
+    margin-right: 4px;
+  }
+}

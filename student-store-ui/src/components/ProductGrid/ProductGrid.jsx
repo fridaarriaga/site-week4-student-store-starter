@@ -12,10 +12,11 @@ function ProductGrid({ addToCart, removeFromCart, getQuantityOfItemInCart, produ
             <div className="card">
               <p>No products available</p>
             </div>
-          ) : products.map((product) => (
+          ) : products.map((product, index) => (
             <ProductCard
               key={product.id}
               product={product}
+              index={index}
               quantity={getQuantityOfItemInCart(product)}
               addToCart={() => addToCart(product)}
               removeFromCart={() => removeFromCart(product)}

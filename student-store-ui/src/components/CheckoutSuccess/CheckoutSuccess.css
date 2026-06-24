@@ -47,3 +47,36 @@
   border: solid 1px white;
   color: white;
 }
+
+@media screen and (max-width: 480px) {
+  .CheckoutSuccess {
+    padding: 0.75rem 0.6rem;
+  }
+
+  .CheckoutSuccess > h3,
+  .CheckoutSuccess p,
+  .CheckoutSuccess .card,
+  .CheckoutSuccess .card .card-title,
+  .CheckoutSuccess .purchase .header,
+  .CheckoutSuccess .purchase li {
+    color: #4b2a48;
+  }
+
+  .CheckoutSuccess p {
+    font-size: 17px;
+    line-height: 1.3;
+  }
+
+  .CheckoutSuccess .purchase {
+    padding-left: 16px;
+  }
+
+  .CheckoutSuccess button {
+    margin: 8px 6px;
+    padding: 10px 14px;
+    font-size: 15px;
+    border-color: #b06c99;
+    color: #4b2a48;
+    background: rgba(255, 255, 255, 0.55);
+  }
+}
