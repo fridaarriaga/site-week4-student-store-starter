@@ -2,7 +2,7 @@
 
 Submitted by: **Frida Arriaga**
 
-Deployed Application (optional): [Student Store Deployed Site](https://www.loom.com/share/9a19e117962847e4b79ebcc95fcab8bd)
+Deployed Application (optional): [Student Store Deployed Site](https://frida-tiendita.onrender.com/)
 
 ### Application Features
 
@@ -98,28 +98,33 @@ Deployed Application (optional): [Student Store Deployed Site](https://www.loom.
 
 ### Walkthrough Video
 
-`TODO://` Add the embedded URL code to your animated app walkthrough below, `ADD_EMBEDDED_CODE_HERE`. Make sure the video or gif actually renders and animates when viewing this README. (🚫 Remove this paragraph after adding walkthrough video)
-
-`ADD_EMBEDDED_CODE_HERE`
+`https://www.loom.com/share/9a19e117962847e4b79ebcc95fcab8bd`
 
 ### Reflection
 
 * Did the topics discussed in your labs prepare you to complete the assignment? Be specific, which features in your weekly assignment did you feel unprepared to complete?
 
-Add your response here
+The labs gave me a strong foundation for building REST endpoints, connecting a frontend to a backend, and working with database models. I felt most prepared for implementing product and order CRUD plus cart-to-checkout flow integration. The part I felt less prepared for was handling more advanced Prisma workflows and debugging migration/schema edge cases, so I had to spend extra time reading docs and testing to make sure relationships and constraints behaved correctly.
 
 * If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
   
-Add your response here
+I would add a view all past orders stretch feature and made the mouse a custom image like a cupcake. 
 
 * Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
-Add your response here
+Our presentation went well. We used all the time but we didn't go over. Nothing was missing and we went over all the required slides. 
 
 ### Open-source libraries used
 
-- Add any links to open-source libraries used in your project.
+- [React](https://react.dev/)
+- [React Router](https://reactrouter.com/)
+- [Axios](https://axios-http.com/)
+- [Express](https://expressjs.com/)
+- [Prisma](https://www.prisma.io/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ### Shout out
 
 Give a shout out to somebody from your cohort that especially helped you during your project. This can be a fellow peer, instructor, TA, mentor, etc.
+
+Shoutout Esme for being my presenting buddy. Also shoutout my pod for booking a room and helping me present. 
