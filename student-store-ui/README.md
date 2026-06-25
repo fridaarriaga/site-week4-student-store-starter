@@ -90,9 +90,9 @@ Deployed Application (optional): [Student Store Deployed Site](ADD_LINK_HERE)
   - [ ] Upon entering an email address and submitting the input, the list of orders is filtered to only show orders placed by the user with the provided email. 
   - [ ] The user can easily navigate back to the full list of orders after filtering. 
     - [ ] Proper error handling is implemented, such as displaying "no orders found" when an invalid email is provided.
-- [ ] **Deployment**
-  - [ ] Website is deployed using [Render](https://courses.codepath.org/snippets/site/render_deployment_guide).
-  - [ ] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: To ease the grading process, please use the deployed version of your website in your walkthrough with the URL visible. 
+- [X] **Deployment**
+  - [X] Website is deployed using [Render](https://courses.codepath.org/snippets/site/render_deployment_guide).
+  - [X] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: To ease the grading process, please use the deployed version of your website in your walkthrough with the URL visible. 
 
 
 

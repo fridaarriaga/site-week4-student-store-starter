@@ -1,9 +1,21 @@
 import "./CheckoutSuccess.css"
 import { formatPrice } from "../../utils/format"
+import { useNavigate } from "react-router-dom"
 
-const CheckoutSuccess = ({ order, setOrder }) => {
-  const handleOnClose = () => {
+const CheckoutSuccess = ({ order, setOrder, isCartOpen, toggleSidebar }) => {
+  const navigate = useNavigate()
+
+  const handleOnShopMore = () => {
     setOrder(null)
+    navigate("/")
+  }
+
+  const handleOnExit = () => {
+    setOrder(null)
+    if (isCartOpen) {
+      toggleSidebar()
+    }
+    navigate("/")
   }
 
   const renderReceipt = () => (
@@ -35,10 +47,10 @@ const CheckoutSuccess = ({ order, setOrder }) => {
           </header>
           <section className="card-body">{renderReceipt()}</section>
           <footer className="card-foot">
-            <button className="button is-success" onClick={handleOnClose}>
+            <button className="button is-success" onClick={handleOnShopMore}>
               Shop More
             </button>
-            <button className="button" onClick={handleOnClose}>
+            <button className="button" onClick={handleOnExit}>
               Exit
             </button>
           </footer>

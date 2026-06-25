@@ -2,6 +2,7 @@ import ProductCard from "../ProductCard/ProductCard"
 import "./ProductGrid.css"
 
 function ProductGrid({ addToCart, removeFromCart, getQuantityOfItemInCart, products = [] }) {
+  const getCardAnimationDelay = (index) => Math.min(index * 80, 800)
 
   return (
     <div id="Buy" className="ProductGrid">
@@ -16,7 +17,7 @@ function ProductGrid({ addToCart, removeFromCart, getQuantityOfItemInCart, produ
             <ProductCard
               key={product.id}
               product={product}
-              index={index}
+              animationDelayMs={getCardAnimationDelay(index)}
               quantity={getQuantityOfItemInCart(product)}
               addToCart={() => addToCart(product)}
               removeFromCart={() => removeFromCart(product)}
@@ -30,4 +31,4 @@ function ProductGrid({ addToCart, removeFromCart, getQuantityOfItemInCart, produ
 
 }
 
-export default ProductGrid;
+export default ProductGrid
