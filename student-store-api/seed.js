@@ -25,6 +25,7 @@ async function seed() {
     for (const product of productsData.products) {
       await prisma.product.create({
         data: {
+          id: product.id,
           name: product.name,
           description: product.description,
           price: product.price,
