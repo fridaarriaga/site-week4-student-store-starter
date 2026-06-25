@@ -2,7 +2,7 @@
   margin: 10px var(--side-padding) 6px;
   border: 4px solid #ed99fd;
   border-radius: 20px;
-  background: linear-gradient(180deg, #e8b7ff 0%, #bd3af9 100%);
+  background: #e8b7ff 0%;
   box-shadow: 0 10px 24px rgba(201, 120, 240, 0.3);
   display: flex;
   flex-direction: column;
@@ -18,8 +18,8 @@
 .KawaiiBanner h1 {
   font-size: 38px;
   letter-spacing: 1px;
-  color: #ffc6e3;
-  text-shadow: 0 3px 0 #7b1f55;
+  color: #7b1f55;
+  text-shadow: 0 3px 0 #ffc6e3;
   text-align: center;
   position: relative;
   z-index: 2;
