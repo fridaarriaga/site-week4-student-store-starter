@@ -19,7 +19,7 @@ function App() {
   const [activeCategory, setActiveCategory] = useState("All Categories");
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchDraftValue, setSearchDraftValue] = useState("");
-  const [userInfo, setUserInfo] = useState({ customer_id: "" });
+  const [userInfo, setUserInfo] = useState({ customer_id: "", email: "" });
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
   const [isFetching, setIsFetching] = useState(false);
@@ -54,7 +54,12 @@ function App() {
     }
 
     if (!userInfo.customer_id) {
-      setError("Please enter customer ID before checkout.")
+      setError("Please enter student ID before checkout.")
+      return
+    }
+
+    if (!userInfo.email) {
+      setError("Please enter email before checkout.")
       return
     }
 
